@@ -12,12 +12,14 @@ class App extends Component {
     }
 
     render() {
+        /*
         var myStyle = {
             fontSize: 20,
             color: 'red'
         };
+        */
 
-        var someNum = 1;
+        // var someNum = 1;
 
         return (
             <div className="App">
@@ -32,8 +34,11 @@ class App extends Component {
 class Clock extends Component {
     constructor(props) {
         super(props);
+        // Note you can directly set this here.  Only can do this in the
+        // constructor.
         this.state = {
-            date: new Date()
+            date: new Date(),
+            comment: 'Some comment'
         };
     }
 
@@ -47,7 +52,13 @@ class Clock extends Component {
     }
 
     tick() {
-        this.setState({date: new Date()});
+        // You should not set the state directly with assignment statement since the
+        // setState method may cache these setters for performance/efficiency
+        // reasons.
+        this.setState({
+            date: new Date(),
+            comment: this.state.date + ' is Right NOW'
+        });
     }
 
     // When it's done with this component it will de-construct and release resources.
@@ -59,6 +70,7 @@ class Clock extends Component {
         return (
             <div>
                 <h2>The time is:  {this.state.date.toLocaleString()}</h2>
+                <p>{this.state.comment}</p>
             </div>
         );
     }
@@ -135,6 +147,7 @@ class Content extends Component {
 
 class TableRow extends Component {
     // Props are different than state.  You get props from attributes on the call of the tag.
+    // Props are immutable.
     render() {
         return (
             <tr>
