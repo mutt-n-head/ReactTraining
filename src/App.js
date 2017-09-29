@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 
@@ -26,6 +27,8 @@ class App extends Component {
                 <Header />
                 <Content />
                 <Clock />
+                <PropContent propNeeded='This is needed' />
+                <PropContent propString='This is a custom prop String' propNeeded='This is needed' />
             </div>
         );
     }
@@ -61,7 +64,7 @@ class Clock extends Component {
         });
     }
 
-    // When it's done with this component it will de-construct and release resources.
+    // When it's done with this component it will de-construct and releasnpme resources.
     componentWillUnmount() {
         clearInterval(this.timeID);
     }
@@ -96,13 +99,11 @@ class Content extends Component {
                     "id": 1,
                     "name": "Name one",
                     "age": 15
-                },
-                {
+                },{
                     "id": 2,
                     "name": "Name two",
                     "age": 25
-                },
-                {
+                },{
                     "id": 3,
                     "name": "Name three",
                     "age": 35
@@ -117,7 +118,7 @@ class Content extends Component {
         };
 
         return (
-            <p class="container">
+            <p className="container">
                 <h1>What is Component</h1>
                 <table>
                     <thead>
@@ -128,9 +129,11 @@ class Content extends Component {
                         </th>
                     </thead>
                     <tbody>
-                        {this.state.data.map((person, i) =>
-                            <TableRow key={i} data={person} />
-                        )}
+                        {
+                            this.state.data.map((person, i) =>
+                                <TableRow key={i} data={person} />
+                            )
+                        }
                     </tbody>
                 </table>
             </p>
@@ -158,5 +161,61 @@ class TableRow extends Component {
         );
     }
 }
+
+class PropContent extends Component {
+    render() {
+        return (
+            <div>
+                <div>
+                    <h4>propArray: {this.props.propArray}</h4>
+                    <h4>propString: {this.props.propString}</h4>
+                    <h4>propObject: {this.props.propObject.dKey1}</h4>
+                    <h4>propObject: {this.props.propObject.dKey2}</h4>
+                    <h4>propFunc: {this.props.propFunc(4)}</h4>
+                    <h4>propNeeded: {this.props.propNeeded}</h4>
+                </div>
+            </div>
+        );
+    }
+}
+
+// This defines the types, name and properties of the component properties.
+// PropContent.PropTypes = {
+//     propArray: React.PropTypes.array.isRequired,
+//     propString: React.PropTypes.string,
+//     propObject: React.PropTypes.object,
+//     propFunc: React.PropTypes.func,
+//     propNeeded: React.PropTypes.string
+// }
+
+PropContent.propTypes = {
+    propArray: PropTypes.array.isRequired,
+    propString: PropTypes.string,
+    propObject: PropTypes.object,
+    propFunc: PropTypes.func,
+    propNeeded: PropTypes.string.isRequired
+}
+
+// This just defines some defaults in case they weren't provided.
+// PropContent.defaultProps = {
+//     propArray: [1, 2, 3, 4, 5],
+//     propString: 'default prop string',
+//     propObject: {
+//         dKey1: 'defaultVal 1',
+//         dKey2: 'defaultVal 2'
+//     },
+//     propFunc: function(x) { return x * 5;}
+// }
+
+PropContent.defaultProps = {
+    propArray: [1, 2, 3, 4, 5],
+    propString: 'default prop string',
+    propObject: {
+        dKey1: 'defaultVal 1',
+        dKey2: 'defaultVal 2'
+    },
+    propFunc: function(x) { return x * 5;}
+}
+
 
 export default App;
