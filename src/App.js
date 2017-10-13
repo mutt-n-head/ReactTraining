@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
+import {BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
+
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+import Blog from './Blog';
+import Params from './Params';
 
 class App extends Component {
     constructor(props) {
@@ -13,85 +22,34 @@ class App extends Component {
         }
     }
 
+    // It keeps a namespace and hierarchy.  If you pick /contact/another you get "/", "/contact", and "/contact/another".
+    // But if you pick /contact you just get "/" and "/contact" route matches.
     render() {
-        /*
-        var myStyle = {
-            fontSize: 20,
-            color: 'red'
-        };
-        */
-
-        // var someNum = 1;
-
         return (
             <div className="App">
-                <Header />
-                <Content />
-            </div>
-        );
-    }
-}
+                <ul>
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/about">About</Link></li>
+                    <li><Link to="/contact/another">Contact</Link></li>
+                    <li><Link to="/blog">Blog</Link></li>
+                    <li><Link to="/params/somevalue">Params of some value</Link></li>
+                </ul>
 
-class Header extends Component {
-    render() {
-        return (
-            <div className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <h2>Welcome to React</h2>
-            </div>
-        );
-    }
-}
-
-class Content extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: 0
-        };
-
-        this.setNewNumber = this.setNewNumber.bind(this);
-    }
-
-    setNewNumber() {
-        this.setState({
-            data: this.state.data + 1
-        });
-    }
-
-    render() {
-        // Just assign a function here, don't put parenthesis like you are calling it.  You are just assigning it to the onclick.
-        return (
-            <div>
-                <h1>Components Life Cycle</h1>
-                <p>Lesson for lifecycle calls.</p>
+                <Route path="/home" component={Home} />
+                <Route path="/about" component={About} />
+                <Route path="/contact/another" component={Contact} />
                 
-                <button onClick={this.setNewNumber}>Update Number</button>
-                <NumberComponent myNumber={this.state.data}>Update Number</NumberComponent>
+                <Route path="/blog" component={Blog} />
+                {
+                    /* 
+                     * <Route path="/blog" component={Home} /> which would also display the Home component
+                     * AND the Blog component because they have the same path value.
+                     * 
+                     */
+                }
+                
+                <Route path="/params/:id" component={Params} />
             </div>
-        );
-    }
-}
-
-class NumberComponent extends Component {
-    componentWillMount() {
-        console.log('COMPONENT WILL MOUNT');
-    }
-    componentDidMount() {
-        console.log('COMPONENT DID MOUNT');
-    }
-    componentWillReceiveProps(newProps) {
-        console.log('COMPONENT WILL RECEIVE PROPS');
-        console.log(JSON.stringify(newProps));
-    }
-    shouldComponentUpdate(newProps, newState) {
-        console.log('SHOULD UPDATE');
-        return true;
-    }
-    render() {
-        return (
-            <h4>{this.props.myNumber}</h4>
         );
     }
 }
