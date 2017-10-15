@@ -33,6 +33,7 @@ class App extends Component {
                     <li><Link to="/contact/another">Contact</Link></li>
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/params/somevalue">Params of some value</Link></li>
+                    <Link to="/blog/89">Shortcut to blog 89</Link>
                 </ul>
 
                 <Route path="/home" component={Home} />

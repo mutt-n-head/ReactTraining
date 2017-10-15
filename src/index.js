@@ -13,6 +13,10 @@ ReactDOM.render(
         <div>
             <Route path="/" component={App} />
             {/* <Route path="/contact" component={Contact} /> Assuming one would be needed up here also... both will show */}
+            {/* Shortcut right down to the low level child...
+              * which will pull that component and all it's parents in.
+              */}
+            <Link to="/blog/789">Shortcut to blog 789</Link>
         </div>
     </Router>,
     document.getElementById('root'));
